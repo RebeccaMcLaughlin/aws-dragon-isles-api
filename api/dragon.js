@@ -1,5 +1,6 @@
 const uuid = require("uuid");
 const AWS = require("aws-sdk");
+const AddCORS = require("../utils/AddCORS");
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.submit = async (event, context, callback) => {
@@ -26,10 +27,6 @@ module.exports.submit = async (event, context, callback) => {
       .promise()
       .then((res) => {
         return {
-          headers: {
-            "Access-Control-Allow-Origin" : "*",
-            "Access-Control-Allow-Credentials" : true 
-          },
           statusCode: 200,
           body: JSON.stringify({
             message: `New dragon species ${species} added.`,
@@ -38,14 +35,14 @@ module.exports.submit = async (event, context, callback) => {
         };
       });
 
-      callback(null, dragon);
+      callback(null, AddCORS(dragon));
   } catch (err) {
-    callback(null, {
+    callback(null, AddCORS({
       statusCode: 500,
       body: JSON.stringify({
         message: "Unable to add dragon",
       }),
-    });
+    }));
   }
 };
 
@@ -57,18 +54,18 @@ module.exports.list = async (event, context, callback) => {
     })
     .promise();
 
-    callback(null, {
+    callback(null, AddCORS({
       statusCode: 200,
       body: JSON.stringify({
         Items: dragons.Items
       })
-    });
+    }, "POST"));
   } catch (err) {
-    callback(null, {
+    callback(null, AddCORS({
       statusCode: 500,
       body: JSON.stringify({
         message: err.message
       })
-    });
+    }, "POST"));
   }
 };
