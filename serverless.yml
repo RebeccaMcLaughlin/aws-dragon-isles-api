@@ -41,6 +41,10 @@ provider:
 plugins:
   - serverless-offline
 
+custom:
+  serverless-offline:
+    httpPort: 4000
+    useChildProcesses: true
 
 functions:
   dragonSubmit:
