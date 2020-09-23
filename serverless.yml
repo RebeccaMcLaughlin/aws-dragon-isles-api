@@ -77,6 +77,7 @@ functions:
       - http:
           path: dragons
           method: get
+          cors: true
 
 resources:
   Resources:
