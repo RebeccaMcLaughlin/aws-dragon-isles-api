@@ -26,6 +26,10 @@ module.exports.submit = async (event, context, callback) => {
       .promise()
       .then((res) => {
         return {
+          headers: {
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials" : true 
+          },
           statusCode: 200,
           body: JSON.stringify({
             message: `New dragon species ${species} added.`,
