@@ -1,6 +1,6 @@
 const uuid = require("uuid");
 const AWS = require("aws-sdk");
-const AddCORS = require("../utils/AddCORS");
+const { AddCORS } = require("../utils/AddCORS");
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 module.exports.submit = async (event, context, callback) => {
